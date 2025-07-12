@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Projects.Tile_Game.Scripts;
+using Tools.Scripts.Inspector.Multidimensional_Arrays;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -12,20 +13,20 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     
     //Internal
     private int _row, _col;
-    private TileState _state;
+    private Active _state;
 
-    public TileState State => _state;
+    public Active State => _state;
     
     public void Init(int row, int col)
     {
-        _state = TileState.OFF;
+        _state = Active.Disabled;
         _row = row;
         _col = col;
         UpdateVisuals();
         TileManager.Instance.OnTileClicked += OnBoardChanged;
     }
 
-    public void SetState(TileState state)
+    public void SetState(Active state)
     {
         _state = state;
         UpdateVisuals();
@@ -56,13 +57,13 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     {
         switch (_state)
         {
-            case TileState.ON:
-                _state = TileState.OFF;
+            case Active.Enabled:
+                _state = Active.Disabled;
                 break;
-            case TileState.OFF:
-                _state = TileState.ON;
+            case Active.Disabled:
+                _state = Active.Enabled;
                 break;
-            case TileState.INVISIBLE or _:
+            case Active.Unavailable or _:
                 break;
         }
         UpdateVisuals();
@@ -72,13 +73,13 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     {
         switch (_state)
         {
-            case TileState.ON:
+            case Active.Enabled:
                 _image.color = Color.red;
                 break;
-            case TileState.OFF:
+            case Active.Disabled:
                 _image.color = Color.black;
                 break;
-            case TileState.INVISIBLE or _:
+            case Active.Unavailable or _:
                 _image.color = Color.clear;
                 return;
         }
