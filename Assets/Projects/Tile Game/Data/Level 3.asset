@@ -9,12 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac82989565cb43d38a4afc60cd0fe995, type: 3}
-  m_Name: New Test Grid
+  m_Script: {fileID: 11500000, guid: 412db7b617284db4ca28c9624de97428, type: 3}
+  m_Name: Level 3
   m_EditorClassIdentifier: 
   RowsNum: 3
   ColumnsNum: 3
   Grid:
-  - ArrayColumns: 000000000000000000000000
-  - ArrayColumns: 000000000000000000000000
-  - ArrayColumns: 000000000000000000000000
+  - ArrayColumns: 020000000100000002000000
+  - ArrayColumns: 010000000100000001000000
+  - ArrayColumns: 020000000100000002000000
+  SolutionTurnNum: 1
+  UseSpecificConfig: 1

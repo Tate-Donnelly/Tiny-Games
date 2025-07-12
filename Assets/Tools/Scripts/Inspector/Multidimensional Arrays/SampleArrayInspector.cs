@@ -10,15 +10,12 @@ public class SampleArrayInspector : Editor
     SampleArray _sampleArray;
 
     private int _length;
-    private Texture _enabledSquare;
-    private Texture _disabledSquare;
-    private Texture _unavailableSquare;
+    public Texture _enabledSquare;
+    public Texture _disabledSquare;
+    public Texture _unavailableSquare;
     
     void OnEnable()
     {
-        _enabledSquare = (Texture) AssetDatabase.LoadAssetAtPath("Assets/Tools/Scripts/Inspector/Multidimensional Arrays/Art/enabled.png", typeof(Texture));
-        _disabledSquare = (Texture) AssetDatabase.LoadAssetAtPath("Assets/Tools/Scripts/Inspector/Multidimensional Arrays/Art/disabled.png", typeof(Texture));
-        _unavailableSquare = (Texture) AssetDatabase.LoadAssetAtPath("Assets/Tools/Scripts/Inspector/Multidimensional Arrays/Art/unavailable.png", typeof(Texture));
         _length = Enum.GetValues(typeof(Active)).Length;
     }
 

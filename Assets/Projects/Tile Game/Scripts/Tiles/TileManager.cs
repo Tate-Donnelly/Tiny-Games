@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Tools.Scripts;
+using Tools.Scripts.Inspector.Multidimensional_Arrays;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -49,15 +50,15 @@ namespace Projects.Tile_Game.Scripts
 
         public void LoadLevels(Level level)
         {
-            if (level.BoardConfiguration == null)
+            if (level.Grid == null)
             {
-                _col = level.Columns;
-                _row = level.Rows;
+                _col = level.ColumnsNum;
+                _row = level.RowsNum;
             }
             else
             {
-                _col = level.BoardConfiguration.Length;
-                _row = level.BoardConfiguration.Length;
+                _col = level.Grid.Length;
+                _row = level.Grid.Length;
             }
             
             SetupTiles(level);
@@ -83,11 +84,11 @@ namespace Projects.Tile_Game.Scripts
                     {
                         if (level.UseSpecificConfig)
                         {
-                            tiles[r][c].SetState(GetState(level.BoardConfiguration,r,c));
+                            tiles[r][c].SetState(GetState(level.Grid,r,c));
                         }
                         else
                         {
-                            tiles[r][c].SetState(TileState.OFF);
+                            tiles[r][c].SetState(Active.Disabled);
                         }
                         tiles[r][c].gameObject.SetActive(true);
                     }
@@ -95,9 +96,9 @@ namespace Projects.Tile_Game.Scripts
             }
         }
 
-        private TileState GetState(Wrapper<TileState>[] boardConfig, int row, int col)
+        private Active GetState(ArrayRow<Active>[] boardConfig, int row, int col)
         {
-            return boardConfig[row].values[col];
+            return boardConfig[row].ArrayColumns[col];
         }
 
         public void InvokeOnTileClicked(int row, int col)
@@ -116,7 +117,7 @@ namespace Projects.Tile_Game.Scripts
             {
                 foreach (Tile tile in tileList)
                 {
-                    if (tile.State == TileState.OFF && tile.gameObject.activeSelf) return false;
+                    if (tile.State == Active.Disabled && tile.gameObject.activeSelf) return false;
                 }
             }
             return true;

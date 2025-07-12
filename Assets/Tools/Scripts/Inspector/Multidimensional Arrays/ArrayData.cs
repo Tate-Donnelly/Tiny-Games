@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ArrayData<T> : ScriptableObject
 {
-    [Min(1f)] public int RowsNum;
-    [Min(1f)] public int ColumnsNum;
+    [Min(1f)] public int RowsNum=1;
+    [Min(1f)] public int ColumnsNum=1;
     [HideInInspector] public ArrayRow<T>[] Grid;
 }
 
