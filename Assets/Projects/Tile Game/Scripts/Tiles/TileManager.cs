@@ -88,7 +88,7 @@ namespace Projects.Tile_Game.Scripts
                         }
                         else
                         {
-                            tiles[r][c].SetState(Active.Disabled);
+                            tiles[r][c].SetState(State.Disabled);
                         }
                         tiles[r][c].gameObject.SetActive(true);
                     }
@@ -96,7 +96,7 @@ namespace Projects.Tile_Game.Scripts
             }
         }
 
-        private Active GetState(ArrayRow<Active>[] boardConfig, int row, int col)
+        private State GetState(ArrayRow<State>[] boardConfig, int row, int col)
         {
             return boardConfig[row].ArrayColumns[col];
         }
@@ -117,7 +117,7 @@ namespace Projects.Tile_Game.Scripts
             {
                 foreach (Tile tile in tileList)
                 {
-                    if (tile.State == Active.Disabled && tile.gameObject.activeSelf) return false;
+                    if (tile.State == State.Disabled && tile.gameObject.activeSelf) return false;
                 }
             }
             return true;

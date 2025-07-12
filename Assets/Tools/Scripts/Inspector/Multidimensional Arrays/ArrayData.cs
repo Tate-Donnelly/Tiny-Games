@@ -13,4 +13,9 @@ public class ArrayData<T> : ScriptableObject
 public class ArrayRow<T>
 {
     public T[] ArrayColumns;
+
+    public ArrayRow(int colNum)
+    {
+        ArrayColumns = new T[colNum];
+    }
 }
