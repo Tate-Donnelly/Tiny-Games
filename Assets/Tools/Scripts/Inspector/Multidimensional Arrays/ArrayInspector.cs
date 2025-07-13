@@ -1,21 +1,19 @@
 ﻿using System;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace Tools.Scripts.Inspector.Multidimensional_Arrays
 {
+#if UNITY_EDITOR
+    /// <summary>
+    /// Will create an array of buttons of enum type T
+    /// </summary>
+    /// <typeparam name="T">Enum</typeparam>
     public class ArrayInspector<T>:Editor
     {
         protected ArrayData<T> _arrayData;
-        private int _length;
-        public Texture _enabledSquare;
-        public Texture _disabledSquare;
-        public Texture _unavailableSquare;
-        
-        void OnEnable()
-        {
-            SetEnumLength();
-        }
 
         public override void OnInspectorGUI()
         {
@@ -29,8 +27,6 @@ namespace Tools.Scripts.Inspector.Multidimensional_Arrays
         }
         
         private void SetArrayTarget() => _arrayData = (ArrayData<T>)target;
-        
-        private void SetEnumLength() => _length = Enum.GetValues(typeof(T)).Length;
         
         #region Grid Setup
         private void UpdateGridSizes()
@@ -129,7 +125,7 @@ namespace Tools.Scripts.Inspector.Multidimensional_Arrays
                 UpdateRow(i);
                 for (int j = 0; j < _arrayData.Grid[i].ArrayColumns.Length; j++)
                 {
-                    DrawButton(i, j);
+                    DrawElement(i, j);
                 }
                 GUILayout.EndHorizontal();
             }
@@ -152,46 +148,12 @@ namespace Tools.Scripts.Inspector.Multidimensional_Arrays
         }
 
         /// <summary>
-        /// Draws buttons for the grid's corresponding element
+        /// Draws element that corresponds to the cell at (row, column)
         /// </summary>
         /// <param name="row">Grid row</param>
         /// <param name="column">Grid column</param>
-        private void DrawButton(int row, int column)
-        {
-            T value = _arrayData.Grid[row].ArrayColumns[column];
-            if (GUILayout.Button(GetTexture(value), GUILayout.MaxWidth(50), GUILayout.MaxHeight(50)))
-            {
-                OnButtonClicked(row,column,value);
-            }
-        }
-        
-        protected virtual void OnButtonClicked(int row, int column, T value){}
-        
-        /// <summary>
-        /// Gets the state's corresponding texture
-        /// </summary>
-        /// <param name="state"></param>
-        /// <returns></returns>
-        protected virtual Texture GetTexture(T state)
-        {
-            return state switch
-            {
-                State.Enabled => _enabledSquare,
-                State.Disabled => _disabledSquare,
-                State.Unavailable or _ => _unavailableSquare
-            };
-        }
-        
-        /// <summary>
-        /// Gets the next index of the enum state
-        /// </summary>
-        /// <param name="index">current index</param>
-        /// <returns></returns>
-        protected int NextIndex(int index)
-        {
-            int result = ++index % _length;
-            return result;
-        }
+        protected virtual void DrawElement(int row, int column) {}
         #endregion
     }
+    #endif
 }

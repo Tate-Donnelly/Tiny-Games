@@ -13,20 +13,20 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     
     //Internal
     private int _row, _col;
-    private State _state;
+    private TileState _state;
 
-    public State State => _state;
+    public TileState State => _state;
     
     public void Init(int row, int col)
     {
-        _state = State.Disabled;
+        _state = TileState.OFF;
         _row = row;
         _col = col;
         UpdateVisuals();
         TileManager.Instance.OnTileClicked += OnBoardChanged;
     }
 
-    public void SetState(State state)
+    public void SetState(TileState state)
     {
         _state = state;
         UpdateVisuals();
@@ -57,13 +57,13 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     {
         switch (_state)
         {
-            case State.Enabled:
-                _state = State.Disabled;
+            case TileState.ON:
+                _state = TileState.OFF;
                 break;
-            case State.Disabled:
-                _state = State.Enabled;
+            case TileState.OFF:
+                _state = TileState.ON;
                 break;
-            case State.Unavailable or _:
+            case TileState.INVISIBLE or _:
                 break;
         }
         UpdateVisuals();
@@ -73,13 +73,13 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     {
         switch (_state)
         {
-            case State.Enabled:
+            case TileState.ON:
                 _image.color = Color.red;
                 break;
-            case State.Disabled:
+            case TileState.OFF:
                 _image.color = Color.black;
                 break;
-            case State.Unavailable or _:
+            case TileState.INVISIBLE or _:
                 _image.color = Color.clear;
                 return;
         }
@@ -91,10 +91,10 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     }
 }
 
-[System.Serializable]
+[Serializable]
 public enum TileState
 {
     OFF,
     ON,
-    INVISIBLE,
+    INVISIBLE
 }
